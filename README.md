@@ -3,6 +3,37 @@ Sure! Here's a comprehensive README file for the `order-service` that includes i
 ---
 
 # Order Service
+Project stucture 
+```mermaid
+graph TD
+
+    6["User<br>External Actor"]
+    subgraph 1["Analytic Service<br>Bun/TypeScript"]
+        12["Data Consumer<br>Bun/TypeScript"]
+    end
+    subgraph 2["Payment Service<br>Bun/TypeScript"]
+        11["Payment Processor<br>Bun/TypeScript"]
+    end
+    subgraph 3["Order Service<br>Bun/TypeScript"]
+        10["Order API<br>Bun/TypeScript"]
+    end
+    subgraph 4["Messaging Infrastructure System<br>Apache Kafka"]
+        subgraph 5["Kafka Cluster<br>Docker Compose"]
+            7["Zookeeper<br>Apache Zookeeper"]
+            8["Kafka Broker<br>Apache Kafka"]
+            9["Kafka Producer/Consumer CLI<br>Node.js"]
+            %% Edges at this level (grouped by source)
+            7["Zookeeper<br>Apache Zookeeper"] -->|manages| 8["Kafka Broker<br>Apache Kafka"]
+            9["Kafka Producer/Consumer CLI<br>Node.js"] -->|interacts with| 8["Kafka Broker<br>Apache Kafka"]
+        end
+    end
+    %% Edges at this level (grouped by source)
+    10["Order API<br>Bun/TypeScript"] -->|produces order events| 8["Kafka Broker<br>Apache Kafka"]
+    11["Payment Processor<br>Bun/TypeScript"] -->|produces payment outcomes| 8["Kafka Broker<br>Apache Kafka"]
+    6["User<br>External Actor"] -->|manages orders via| 10["Order API<br>Bun/TypeScript"]
+    8["Kafka Broker<br>Apache Kafka"] -->|sends payment requests to| 11["Payment Processor<br>Bun/TypeScript"]
+    8["Kafka Broker<br>Apache Kafka"] -->|sends events to| 12["Data Consumer<br>Bun/TypeScript"]
+
 
 ## Overview
 
