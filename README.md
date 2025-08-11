@@ -1,6 +1,5 @@
-Sure! Here's a comprehensive README file for the `order-service` that includes information about each service:
+# Hono Microservices with kafka
 
----
 
 # Order Service
 Project stucture 
