@@ -14,6 +14,7 @@ const run = async () => {
       { topic: "payment-successful" },
       { topic: "order-successful" },
       { topic: "email-successful" },
+      { topic: "payment-refunded" },
     ],
   });
 };
